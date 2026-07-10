@@ -1,0 +1,9 @@
+repos:
+  - repo: local
+    hooks:
+      - id: trailing-whitespace
+        name: trailing-whitespace
+        entry: scripts/check-whitespace.sh
+        language: script
+        types: [text]
+
