@@ -11,117 +11,69 @@ jira-epic: ""
 
 # [Feature Name]
 
-> One-sentence value proposition: "We help [persona] [achieve goal] by [approach]."
+## Overview
 
-## 1. Problem Statement
+**Summary:** [One short paragraph describing the initiative and the user value.]
 
-**Current state:** [What happens today]
+**Problem:** [What problem exists today?]
 
-**Pain:** [Specific pain point with evidence]
+**Why now:** [What changed, what is at risk, or why this is worth doing now.]
 
-**Impact:** [Business or user impact if left unsolved]
+## Goals
 
-## 2. Personas
+| Goal | Metric | Baseline | Target |
+|------|--------|----------|--------|
+| [Goal] | [How success is measured] | [Current state] | [Desired state] |
 
-| Persona | Role | Primary Pain | Success State |
-|---------|------|-------------|---------------|
-| [Name] | [Title / function] | [What frustrates them] | [What good looks like] |
+## Users
 
-## 3. Goals and Success Metrics
+| User / persona | Need | Pain today | Success state |
+|----------------|------|------------|---------------|
+| [Persona] | [Need] | [Current frustration] | [What good looks like] |
 
-| Goal | Success Metric | Baseline | Target |
-|------|---------------|----------|--------|
-| [Goal 1] | [Metric] | [Current value] | [Target value] |
+## Scope
 
-## 4. Domain Glossary
+### In scope
 
-| Term | Definition | Bounded Context |
-|------|-----------|----------------|
-| [Term] | [Precise definition] | [Context name] |
+- [Capability 1]
+- [Capability 2]
 
-## 5. Use Cases
+### Out of scope
 
-### UC-01: [Use Case Name]
+- [Deferred item]
 
-**Actor:** [Persona]
-**Precondition:** [What must be true before this starts]
+## Domain terms
 
-**Main flow:**
-1. [Step 1]
-2. [Step 2]
-3. [Step 3]
+| Term | Definition | Notes / avoid |
+|------|------------|---------------|
+| [Term] | [Precise definition] | [Synonyms or ambiguity to avoid] |
 
-**Postcondition:** [What is true after success]
+## Requirements
 
-**Exceptions:**
-- [Error / edge case]: [What happens]
+### [Requirement name]
 
-## 6. Functional Requirements
+**Story:** As a [user], I want [capability] so that [benefit].
 
-### FR-01: [Requirement Name]
-
-**Story:** As a [persona], I want [action] so that [benefit].
-
-**Acceptance Criteria:**
+**Acceptance criteria:**
 - [ ] [Testable criterion]
 - [ ] [Testable criterion]
 
-**Input/Output Example:**
-```text
-Input:  [Concrete example input]
-Output: [Expected output]
-```
+## Assumptions and constraints
 
-## 7. Non-Functional Requirements
+| Type | Item | Impact if wrong |
+|------|------|-----------------|
+| Assumption | [Assumption] | [Why it matters] |
+| Constraint | [Constraint] | [Why it limits the solution] |
 
-| Attribute | Requirement | Measurement Method |
-|-----------|-------------|-------------------|
-| Latency | P95 <= [X]ms under [load] | [How measured] |
-| Availability | [X]% uptime over rolling 30d | [Monitor / alert] |
-| Error Rate | < [X]% of requests | [Error definition] |
-| Security | [Specific control] | [Audit method] |
+## Dependencies and risks
 
-## 8. Out of Scope
+| Dependency / risk | Type | Owner | Notes |
+|-------------------|------|-------|------|
+| [System, team, or external factor] | [Dependency / risk] | [Owner] | [Context] |
 
-| Deferred Item | Rationale | Revisit When |
-|---------------|-----------|-------------|
-| [Item] | [Why deferred] | [Trigger or phase] |
-
-## 9. Assumptions and Constraints
-
-**Assumptions:**
-- [Assumption 1]
-
-**Constraints:**
-- [Constraint 1]
-
-## 10. Dependencies
-
-| Dependency | Type | Owner / Team | Risk Level | Notes |
-|------------|------|-------------|-----------|-------|
-| [System / team] | [API / data / infra / approval] | [Owner] | [High/Med/Low] | [Blocker risk] |
-
-## 11. Release Phases
-
-### Phase 1 — MVP (P0)
-
-**Goal:** [Minimum viable outcome]
-**Includes:**
-- [FR-01]
-
-**Excluded from MVP:** [Explicit deferrals]
-
-## 12. Open Questions and Decision Log
-
-### Open Questions
+## Open questions
 
 | # | Question | Owner | Due |
-|---|---------|-------|-----|
-| Q1 | [Question] | [Name] | [Date] |
-
-### Decision Log
-
-| # | Decision | Rationale | Date | Decided By |
-|---|----------|-----------|------|------------|
-| D1 | [Decision made] | [Why] | [Date] | [Person / group] |
+|---|----------|-------|-----|
+| Q1 | [Question] | [Owner] | [Date] |
 

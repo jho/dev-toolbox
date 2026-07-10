@@ -1,63 +1,61 @@
 ---
 name: creating-prd
-description: Conducts a Socratic interview with a product manager, drafts a structured PRD in the repo template, and saves it for downstream event modeling and planning.
+description: Interviews a product manager, drafts a standard PRD in the repo template, and saves it for design and implementation planning.
 metadata:
-  short-description: Create a PRD
+  short-description: Draft a PRD
 ---
 
 # Creating a PRD
 
-Use this skill when a product-manager agent needs to turn a rough initiative into a repo-local PRD that can feed event modeling, architecture, and planning.
+Use this skill when a product-manager agent needs to turn an idea, problem, or initiative into a clear product requirements document.
 
-## Core workflow
+## What this skill does
 
-1. Gather context through an interview.
-2. Draft the PRD from the template.
-3. Review the draft with the PM.
-4. Save the file in the repo.
+- Clarifies the problem and intended outcome.
+- Captures users, scope, success measures, and constraints.
+- Produces a repo-local PRD from a template.
+- Leaves the PRD ready for design, planning, or stakeholder review.
 
-## Interview rules
+## Interview flow
 
-- Ask one question at a time.
-- Prefer concrete examples over abstract goals.
-- Stop and ask follow-ups when a required section is under-specified.
-- Always probe the domain glossary. Define every noun that could become an event, command, aggregate, or slice downstream.
+Ask one question at a time and keep the discussion concrete.
 
-Cover these areas in roughly this order:
+Start with:
 
-1. Problem statement and evidence
-2. Primary persona
-3. Success metrics
-4. Domain glossary
-5. Use cases
-6. Functional requirements
-7. Non-functional requirements
-8. Out of scope
-9. Constraints and dependencies
-10. Open questions and decisions
+1. What problem are we solving?
+2. Who feels that problem most?
+3. What does success look like?
+4. What is in scope for the first release?
+5. What is explicitly out of scope?
+6. What dependencies, constraints, or risks matter?
+7. What terms in this domain need precise definitions?
 
-## Drafting rules
+If the brief already answers a question, skip it and focus on the gaps.
+
+## Drafting guidance
 
 - Use the repo-local template at `templates/prd_template.md`.
-- Keep the PRD scoped to one initiative.
-- Write testable acceptance criteria where possible.
-- Every metric needs a number.
-- Every deferred item needs a rationale.
-- Every open question needs an owner and due date if available.
+- Keep the PRD focused on one initiative.
+- Prefer measurable goals over vague outcomes.
+- Use testable acceptance criteria.
+- Define domain terms precisely and avoid synonyms.
+- Record open questions instead of guessing when something is unresolved.
 
-## Save location
+## Saving the file
 
-Default to `docs/prds/<slug>.md` in the current repo.
-Confirm the exact path if the repo has a different PRD convention.
+Default location: `docs/prds/<slug>.md`
 
-## Review gate
+If a repository uses a different convention, confirm the path before saving.
 
-Before saving, summarize:
+## Review pass
+
+Before writing the file, summarize:
 
 - the problem statement
-- measurable success metrics
-- glossary terms
-- open questions
+- the target user
+- the success metrics
+- the out-of-scope items
+- the open questions
 
-If the PM changes scope, revise the draft before saving.
+Revise the draft if the PM changes direction.
 
