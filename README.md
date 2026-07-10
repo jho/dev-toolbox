@@ -40,7 +40,14 @@ See [skills/README.md](skills/README.md) for the current skill index.
 ## Install
 
 Run `./install.sh` to sync the repo's skills into the current Codex or Claude skills directory.
-For curlable installs, use `./bootstrap.sh` from a cloned copy or a raw-file wrapper.
+
+Examples:
+
+```bash
+./install.sh --surface codex
+./install.sh --surface claude
+AI_TOOLBOX_REPO_REF=main /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/jho/ai-toolbox/main/install.sh)"
+```
 
 ## Principles
 
