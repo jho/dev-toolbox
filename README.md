@@ -48,6 +48,12 @@ To force a specific surface from a cloned repo:
 ./install.sh --surface claude
 ```
 
+To verify what was installed:
+
+```bash
+./install.sh --verify
+```
+
 ## Principles
 
 - Keep role specs short and portable.

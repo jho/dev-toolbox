@@ -6,7 +6,7 @@ repo_ref="${AI_TOOLBOX_REPO_REF:-main}"
 
 usage() {
   cat <<'EOF'
-Usage: install.sh [--surface auto|codex|claude] [--target PATH]
+Usage: install.sh [--surface auto|codex|claude] [--target PATH] [--verify]
 
 Install the toolbox skills into a Codex or Claude skills directory.
 
@@ -17,11 +17,13 @@ Defaults:
 
 If run outside a cloned checkout, the script clones the toolbox repo into a temporary directory
 and installs from there. Override the remote with AI_TOOLBOX_REPO_URL and AI_TOOLBOX_REPO_REF.
+Use --verify to print the installed skill directories after syncing.
 EOF
 }
 
 target_root=""
 surface="auto"
+verify="false"
 
 while [ "$#" -gt 0 ]; do
   case "$1" in
@@ -32,6 +34,9 @@ while [ "$#" -gt 0 ]; do
     --target)
       shift
       target_root="${1:-}"
+      ;;
+    --verify)
+      verify="true"
       ;;
     -h|--help)
       usage
@@ -50,6 +55,13 @@ install_from_repo() {
   local repo_root="$1"
   local target="$2"
   "$repo_root/scripts/sync-codex-skills.sh" "$target"
+}
+
+list_installed_skills() {
+  local target="$1"
+  find "$target" -mindepth 1 -maxdepth 1 -type d | sort | while read -r skill_dir; do
+    basename "$skill_dir"
+  done
 }
 
 resolve_target_root() {
@@ -88,6 +100,10 @@ script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 if [ -f "$script_dir/scripts/sync-codex-skills.sh" ]; then
   install_from_repo "$script_dir" "$target_root"
+  if [ "$verify" = "true" ]; then
+    printf 'Installed skills:\n'
+    list_installed_skills "$target_root"
+  fi
   exit 0
 fi
 
@@ -96,3 +112,7 @@ trap 'rm -rf "$workdir"' EXIT
 
 git clone --depth 1 --branch "$repo_ref" "$repo_url" "$workdir/ai-toolbox"
 install_from_repo "$workdir/ai-toolbox" "$target_root"
+if [ "$verify" = "true" ]; then
+  printf 'Installed skills:\n'
+  list_installed_skills "$target_root"
+fi
