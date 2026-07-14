@@ -1,0 +1,9 @@
+node_modules/
+dist/
+*.log
+# rendered output
+*.svg
+*.png
+# keep canonical reference renders for the examples (SVG is the default format)
+!examples/*.svg
+!examples/*.png

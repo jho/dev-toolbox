@@ -1,0 +1,146 @@
+// SPDX-License-Identifier: MIT
+import { describe, it, expect } from "vitest";
+import { parse, ParseError } from "../src/parser/parser.js";
+
+describe("parser", () => {
+  it("parses model, personas, contexts, slices and elements", () => {
+    const ast = parse(`
+model "Demo"
+persona Customer
+context Order
+
+slice "Place Order" {
+  ui Product Catalog @Customer
+  command Place Order
+  event Order Placed @Order
+}
+`);
+    expect(ast.name).toBe("Demo");
+    expect(ast.personas).toEqual(["Customer"]);
+    expect(ast.contexts).toEqual(["Order"]);
+    expect(ast.slices).toHaveLength(1);
+    const els = ast.slices[0].elements;
+    expect(els.map((e) => e.kind)).toEqual(["ui", "command", "event"]);
+    expect(els[0]).toMatchObject({ name: "Product Catalog", persona: "Customer" });
+    expect(els[2]).toMatchObject({ name: "Order Placed", context: "Order" });
+  });
+
+  it("parses a view `from` clause with multiple quoted events", () => {
+    const ast = parse(`
+slice "S" {
+  view Open Orders from "Order Placed", "Order Updated"
+}
+`);
+    expect(ast.slices[0].elements[0].from).toEqual([
+      "Order Placed",
+      "Order Updated",
+    ]);
+    expect(ast.slices[0].elements[0].name).toBe("Open Orders");
+  });
+
+  it("parses a `note` clause and keeps it out of the name", () => {
+    const ast = parse(`
+slice "S" {
+  command Place Order note "notes/place-order.md"
+  event Order Placed @Order note "notes/order-placed.md"
+  ui Catalog note "notes/catalog.md" @Customer
+}
+`);
+    const [cmd, evt, ui] = ast.slices[0].elements;
+    expect(cmd).toMatchObject({ name: "Place Order", note: "notes/place-order.md" });
+    expect(evt).toMatchObject({ name: "Order Placed", context: "Order", note: "notes/order-placed.md" });
+    expect(ui).toMatchObject({ name: "Catalog", persona: "Customer", note: "notes/catalog.md" });
+  });
+
+  it("strips `note` before the `from` clause without swallowing it", () => {
+    const ast = parse(`
+slice "S" {
+  view Open Orders note "notes/open.md" from "Order Placed", "Order Updated"
+}
+`);
+    expect(ast.slices[0].elements[0]).toMatchObject({
+      name: "Open Orders",
+      note: "notes/open.md",
+      from: ["Order Placed", "Order Updated"],
+    });
+  });
+
+  it("parses a multi-line `{ … }` field block with optional types", () => {
+    const ast = parse(`
+slice "S" {
+  event Order Placed @Order {
+    orderId
+    total: Money
+    items : List<LineItem>
+  }
+}
+`);
+    const el = ast.slices[0].elements[0];
+    expect(el).toMatchObject({ name: "Order Placed", context: "Order" });
+    expect(el.fields).toEqual([
+      { name: "orderId" },
+      { name: "total", type: "Money" },
+      { name: "items", type: "List<LineItem>" },
+    ]);
+  });
+
+  it("parses an inline `{ a, b: T }` field list", () => {
+    const ast = parse(`slice "S" {\n  command Place Order { customerId, total: Money }\n}`);
+    expect(ast.slices[0].elements[0]).toMatchObject({
+      name: "Place Order",
+      fields: [{ name: "customerId" }, { name: "total", type: "Money" }],
+    });
+  });
+
+  it("allows a field block alongside note/from clauses", () => {
+    const ast = parse(`
+slice "S" {
+  view Open Orders note "notes/o.md" from "Order Placed" {
+    orderId
+    status
+  }
+}
+`);
+    expect(ast.slices[0].elements[0]).toMatchObject({
+      name: "Open Orders",
+      note: "notes/o.md",
+      from: ["Order Placed"],
+      fields: [{ name: "orderId" }, { name: "status" }],
+    });
+  });
+
+  it("rejects an unclosed field block", () => {
+    expect(() => parse(`slice "S" {\n  event E {\n    a`)).toThrow(
+      /field block .* missing a closing/,
+    );
+  });
+
+  it("ignores comments and blank lines", () => {
+    const ast = parse(`
+# a comment
+model "C"   # trailing comment
+
+slice "X" { # open
+  command Do Thing
+}
+`);
+    expect(ast.name).toBe("C");
+    expect(ast.slices[0].elements[0].name).toBe("Do Thing");
+  });
+
+  it("parses explicit arrows", () => {
+    const ast = parse(`arrow Open Orders -> Product Catalog`);
+    expect(ast.arrows[0]).toMatchObject({
+      from: "Open Orders",
+      to: "Product Catalog",
+    });
+  });
+
+  it("rejects an unclosed slice", () => {
+    expect(() => parse(`slice "X" {\n  command A`)).toThrow(ParseError);
+  });
+
+  it("rejects an @tag on a command", () => {
+    expect(() => parse(`slice "X" {\n  command Do @Nope\n}`)).toThrow(ParseError);
+  });
+});
