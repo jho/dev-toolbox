@@ -6,7 +6,7 @@ This repo treats upstream tools and skills as vendored sources plus local wrappe
 
 - Keep the canonical repo content in a subtree under `vendor/`.
 - Keep toolbox-facing entrypoints in `skills/`, `plugins/`, `scripts/`, and `README.md`.
-- Use `ai-toolbox update` to resync local skills and run dependency hooks.
+- Use `dev-toolbox update` to resync local skills and run dependency hooks.
 - Use `scripts/upgrade-*.sh` to refresh vendored subtrees from upstream.
 - Use `mise` to expose repo tasks, not as the package store itself.
 
@@ -30,5 +30,5 @@ If a vendored asset has dependencies:
 This keeps the install path consistent:
 
 ```text
-upstream subtree -> local overlay -> ai-toolbox update -> dependency hooks -> installed tool
+upstream subtree -> local overlay -> dev-toolbox update -> dependency hooks -> installed tool
 ```

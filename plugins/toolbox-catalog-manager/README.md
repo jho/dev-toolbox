@@ -1,6 +1,6 @@
 # toolbox-catalog-manager
 
-Codex plugin package for managing the ai-toolbox catalog.
+Codex plugin package for managing the dev-toolbox catalog.
 
 This package bundles the catalog-manager skill and serves as the first example plugin entry in the
 catalog alongside the vendored `em` tool.

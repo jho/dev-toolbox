@@ -12,7 +12,7 @@ items:
       upstream: https://github.com/milehimikey/em.git
       ref: main
     install:
-      command: ai-toolbox update
+      command: dev-toolbox update
       note: Build the vendored subtree and install the em CLI.
     update:
       command: ./scripts/upgrade-em.sh
@@ -39,7 +39,7 @@ items:
         command: claude plugin install toolbox-catalog-manager
         note: Uses the Claude plugin install flow when available.
     update:
-      command: ai-toolbox update
+      command: dev-toolbox update
       note: Refresh local skills and dependency hooks after catalog edits.
     status: source
     notes:

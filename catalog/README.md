@@ -1,6 +1,6 @@
 # Catalog
 
-This directory is the source of truth for AI-managed tools and installable assets.
+This directory is the source of truth for dev-toolbox-managed tools and installable assets.
 
 ## Purpose
 
@@ -10,7 +10,7 @@ This directory is the source of truth for AI-managed tools and installable asset
 
 ## Current entries
 
-- `em` - first non-marketplace example; vendored from upstream and installed via `ai-toolbox update`
+- `em` - first non-marketplace example; vendored from upstream and installed via `dev-toolbox update`
 - `toolbox-catalog-manager` - catalog manager plugin example for Codex and Claude flows
 
 ## Conventions

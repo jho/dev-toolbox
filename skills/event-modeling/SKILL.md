@@ -39,7 +39,7 @@ Read `reference/methodology.md` (the 7 steps + 4 patterns) and `reference/em-dsl
 
 ## Preconditions (run first)
 
-1. Check the tool: `em --version`. If missing, tell the user to run `ai-toolbox update`
+1. Check the tool: `em --version`. If missing, tell the user to run `dev-toolbox update`
    first so the vendored subtree in `vendor/em` can be built and installed. If you are working
    with the upstream skill outside this repo, use `npm i -g @milehimikey/em` directly and stop
    until installed.

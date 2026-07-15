@@ -1,7 +1,7 @@
 ---
 name: catalog-manager
 description: >-
-  Manage the ai-toolbox catalog of skills, plugins, vendored tools, and install/update flows.
+  Manage the dev-toolbox catalog of skills, plugins, vendored tools, and install/update flows.
   Use when the user wants to add something to the catalog, review what is installed, record how a
   skill or plugin should be installed on Codex or Claude, or update catalog metadata for a vendored
   asset. Prefer editing `catalog/plugins.yaml` as the source of truth and keep install/update
@@ -54,7 +54,7 @@ Use these source types:
 
 ## Defaults
 
-- For vendored items, prefer `ai-toolbox update` as the user-facing sync command.
+- For vendored items, prefer `dev-toolbox update` as the user-facing sync command.
 - For upstream refreshes, prefer a dedicated `scripts/upgrade-<name>.sh`.
 - For plugin packaging, keep the source path local and explicit.
 - For cross-surface catalog items, record both Codex and Claude install commands when known.

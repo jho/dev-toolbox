@@ -1,28 +1,30 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-repo_url="${AI_TOOLBOX_REPO_URL:-https://github.com/jho/ai-toolbox.git}"
+repo_url="${AI_TOOLBOX_REPO_URL:-https://github.com/jho/dev-toolbox.git}"
 repo_ref="${AI_TOOLBOX_REPO_REF:-main}"
-command_name="${AI_TOOLBOX_COMMAND_NAME:-ai-toolbox}"
+command_name="${AI_TOOLBOX_COMMAND_NAME:-dev-toolbox}"
 command_dir="${AI_TOOLBOX_COMMAND_DIR:-$HOME/.local/bin}"
+legacy_command_name="${DEV_TOOLBOX_LEGACY_COMMAND_NAME:-ai-toolbox}"
 
 usage() {
   cat <<'EOF'
 Usage: install.sh [--surface auto|codex|claude] [--target PATH] [--verify]
 
-Install the toolbox skills into a Codex or Claude skills directory.
+Install the dev-toolbox skills into a Codex or Claude skills directory.
 
 Defaults:
   --surface auto    -> prefer Codex when ~/.codex exists, otherwise Claude when ~/.claude exists
   --surface codex   -> $CODEX_HOME/skills or ~/.codex/skills
   --surface claude  -> $CLAUDE_HOME/skills or ~/.claude/skills
 
-If run outside a cloned checkout, the script clones the toolbox repo into a temporary directory
+If run outside a cloned checkout, the script clones the dev-toolbox repo into a temporary directory
 and installs from there. Override the remote with AI_TOOLBOX_REPO_URL and AI_TOOLBOX_REPO_REF.
 Use --verify to print the installed skill directories after syncing.
 
-The installer also drops a small `ai-toolbox` command into $AI_TOOLBOX_COMMAND_DIR
-by default. Use `ai-toolbox update` to resync skills without returning to the repo.
+The installer also drops a small `dev-toolbox` command into $AI_TOOLBOX_COMMAND_DIR
+by default, plus an `ai-toolbox` compatibility alias. Use `dev-toolbox update` to resync
+skills without returning to the repo.
 EOF
 }
 
@@ -84,7 +86,7 @@ script_name="sync-codex-skills.sh"
 
 usage() {
   cat <<'USAGE'
-Usage: ai-toolbox update [--target PATH]
+Usage: dev-toolbox update [--target PATH]
 
 Resync the toolbox skills from the canonical source into a Codex or Claude skills directory.
 
@@ -168,6 +170,10 @@ esac
 EOF
 
   chmod +x "$command_path"
+
+  if [ "$command_name" != "$legacy_command_name" ]; then
+    ln -sf "$command_name" "$2/$legacy_command_name"
+  fi
 }
 
 list_installed_skills() {
@@ -221,6 +227,9 @@ if [ -f "$script_dir/scripts/sync-codex-skills.sh" ]; then
     list_installed_skills "$target_root"
   fi
   printf 'Installed %s to %s\n' "$command_name" "$installed_command_dir/$command_name"
+  if [ "$command_name" != "$legacy_command_name" ]; then
+    printf 'Aliased %s to %s\n' "$legacy_command_name" "$installed_command_dir/$legacy_command_name"
+  fi
   case ":$PATH:" in
     *":$installed_command_dir:"*) ;;
     *)
@@ -242,6 +251,9 @@ if [ "$verify" = "true" ]; then
   list_installed_skills "$target_root"
 fi
 printf 'Installed %s to %s\n' "$command_name" "$installed_command_dir/$command_name"
+if [ "$command_name" != "$legacy_command_name" ]; then
+  printf 'Aliased %s to %s\n' "$legacy_command_name" "$installed_command_dir/$legacy_command_name"
+fi
 case ":$PATH:" in
   *":$installed_command_dir:"*) ;;
   *)

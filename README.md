@@ -1,6 +1,6 @@
-# ai-toolbox
+# dev-toolbox
 
-Personal repository for reusable AI workflow assets.
+Personal repository for reusable developer workflow assets, including AI tooling.
 
 This repo is intended to hold:
 
@@ -22,7 +22,7 @@ The initial role model is intentionally compressed:
 ## Repo layout
 
 ```text
-ai-toolbox/
+dev-toolbox/
   roles/
   skills/
   plugins/
@@ -35,16 +35,18 @@ ai-toolbox/
 See [skills/README.md](skills/README.md) for the current skill index.
 See [plugins/README.md](plugins/README.md) for the current plugin source index.
 See [docs/vendoring.md](docs/vendoring.md) for the subtree + dependency pattern.
-See [catalog/README.md](catalog/README.md) for the AI-managed tool catalog.
+See [docs/dotfiles-boundary.md](docs/dotfiles-boundary.md) for what stays in dotfiles vs dev-toolbox.
+See [catalog/README.md](catalog/README.md) for the dev-toolbox catalog.
 
 ## Install
 
 Run `./install.sh` to sync the repo's skills into the current Codex or Claude skills directory.
-It also installs an `ai-toolbox` helper into `~/.local/bin` by default.
-`ai-toolbox update` resyncs the skills and runs any vendored dependency hooks.
+It also installs a `dev-toolbox` helper into `~/.local/bin` by default and keeps
+`ai-toolbox` as a compatibility alias.
+`dev-toolbox update` resyncs the skills and runs any vendored dependency hooks.
 
 ```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/jho/ai-toolbox/main/install.sh)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/jho/dev-toolbox/main/install.sh)"
 ```
 
 To force a specific surface from a cloned repo:
@@ -63,10 +65,12 @@ To verify what was installed:
 After install, use:
 
 ```bash
-ai-toolbox update
+dev-toolbox update
 ```
 
 You can override the helper install location with `AI_TOOLBOX_COMMAND_DIR`.
+Make sure `~/.local/bin` appears before `/opt/homebrew/bin` in the shell Codex uses so the
+toolbox-installed `em` is the one that gets picked up.
 
 The repo uses `mise` for task orchestration around sync and subtree updates.
 
