@@ -7,6 +7,7 @@ Current skills:
 - [event-modeling](event-modeling/SKILL.md)
 - [catalog-manager](catalog-manager/SKILL.md)
 - [creating-prd](creating-prd/SKILL.md)
+- [creating-github-issues](creating-github-issues/SKILL.md)
 
 ## Notes
 
