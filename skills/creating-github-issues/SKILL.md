@@ -25,7 +25,15 @@ resolve repository → search related issues → draft issue → review/authoriz
 
 ### 1. Resolve the repository
 
-Use the current repository when unambiguous. Otherwise ask for the repository before making a write. Inspect local contribution guidance and issue templates when they exist.
+Use the current repository when unambiguous. Otherwise ask for the repository before making a write. Inspect local contribution guidance and `.github/ISSUE_TEMPLATE/` when it exists.
+
+Issue-template precedence:
+
+1. Use the repository's matching issue template or issue form when one exists.
+2. If several templates could apply, choose based on the issue type and explain the choice.
+3. If no repository template applies, read [references/default-issue-template.md](references/default-issue-template.md) and use it as the fallback structure.
+
+Do not load the bundled fallback reference when a repository template already provides the required structure.
 
 ### 2. Search for related issues
 
@@ -40,37 +48,15 @@ If a likely duplicate exists, tell the user and ask whether to update, reference
 
 ### 3. Prepare the issue
 
-Use a concise, action-oriented title. Prefer this description order:
+Use a concise, action-oriented title. Follow the selected repository template exactly, including required fields, checkboxes, metadata, and instructions. Do not discard useful repository fields merely because they are absent from the fallback template.
 
-## What
-
-Describe the user-visible behavior or capability in plain language. Do not lead with files, functions, commands, or an implementation choice.
-
-## Why
-
-Explain the motivation, impact, evidence, and why the work matters now.
-
-## Acceptance Criteria
-
-Define done using independently testable Given/When/Then criteria:
-
-- [ ] Given [context], when [action], then [observable outcome]
-
-Use concrete checks, not “works correctly” or “improve performance.”
-
-## Implementation Notes
-
-Optional. Put technical constraints, likely components, migration concerns, and explicit design decisions here. Keep these separate from the user-facing outcome.
-
-## Dependencies
-
-Optional. List related issues, blockers, or external references. Link them when the repository supports issue links.
-
-For research, performance, or data work, explicitly distinguish baseline protection, candidate evaluation, promotion criteria, and non-goals. Preserve locked evaluation boundaries and holdout rules when relevant.
+When using the fallback, read [references/default-issue-template.md](references/default-issue-template.md). For research, performance, or data work, also apply its guidance on baseline protection, candidate evaluation, promotion criteria, non-goals, and locked evaluation boundaries.
 
 ### 4. Review and create
 
 If the user requested a draft, stop after presenting it. If the user authorized creation, create it with the supported tool and apply labels only when their existence and meaning are known. Do not invent labels or add assignees/milestones without instruction.
+
+If no repository issue template exists, use the bundled fallback for the issue body. You may offer to add a repository template under `.github/ISSUE_TEMPLATE/`, but creating or modifying repository files is a separate write and requires explicit authorization. If authorized, adapt the fallback to the repository's conventions, preserve the required issue fields, and show the proposed file change before or as part of implementation.
 
 ### 5. Report
 
