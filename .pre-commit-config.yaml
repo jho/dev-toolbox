@@ -6,4 +6,8 @@ repos:
         entry: scripts/check-whitespace.sh
         language: script
         types: [text]
-
+      - id: bash-syntax
+        name: bash-syntax
+        entry: scripts/check-bash-syntax.sh
+        language: script
+        files: \.sh$

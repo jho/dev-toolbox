@@ -8,6 +8,8 @@ Current skills:
 - [catalog-manager](catalog-manager/SKILL.md)
 - [creating-prd](creating-prd/SKILL.md)
 - [creating-github-issues](creating-github-issues/SKILL.md)
+- [listing-github-issues](listing-github-issues/SKILL.md)
+- [working-on-github-issues](working-on-github-issues/SKILL.md)
 
 ## Notes
 

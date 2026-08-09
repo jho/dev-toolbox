@@ -1,0 +1,4 @@
+interface:
+  display_name: "Work on GitHub issues"
+  short_description: "Implement and update GitHub issues"
+  default_prompt: "Use $working-on-github-issues to take this GitHub issue from review through verified completion."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "List GitHub issues"
+  short_description: "Discover and triage GitHub issues"
+  default_prompt: "Use $listing-github-issues to find and summarize relevant GitHub issues."
