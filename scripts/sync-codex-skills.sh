@@ -15,4 +15,17 @@ for skill_dir in "$repo_root"/skills/*; do
   cp -R "$skill_dir"/. "$dest_dir"/
 done
 
-printf 'Synced skills from %s to %s\n' "$repo_root/skills" "$target_root"
+for vendor_dir in "$repo_root"/vendor/*/; do
+  [ -d "$vendor_dir" ] || continue
+  vendor_skills_dir="$vendor_dir/.claude/skills"
+  [ -d "$vendor_skills_dir" ] || continue
+  for skill_dir in "$vendor_skills_dir"/*; do
+    [ -d "$skill_dir" ] || continue
+    skill_name="$(basename "$skill_dir")"
+    dest_dir="$target_root/$skill_name"
+    mkdir -p "$dest_dir"
+    cp -R "$skill_dir"/. "$dest_dir"/
+  done
+done
+
+printf 'Synced skills from %s and vendor packages to %s\n' "$repo_root/skills" "$target_root"
