@@ -1,3 +1,12 @@
+---
+name: architect
+description: Shape solution architecture and resolve cross-cutting design tradeoffs.
+skills: []
+handoffs:
+  - planner
+  - product-manager
+---
+
 # Role: architect
 
 ## Purpose
@@ -37,4 +46,3 @@ Shape the solution architecture, resolve cross-cutting tradeoffs, and keep desig
 
 - To `planner` for detailed decomposition.
 - Back to `product-manager` when scope or intent needs clarification.
-

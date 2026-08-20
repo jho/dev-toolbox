@@ -1,3 +1,12 @@
+---
+name: release-manager
+description: Move approved work through merge and release readiness safely.
+skills: []
+handoffs:
+  - tester
+  - developer
+---
+
 # Role: release-manager
 
 ## Purpose
@@ -37,4 +46,3 @@ Move approved work through merge, deploy, and cutover safely.
 
 - Back to `tester` if release validation fails.
 - Back to `developer` if a fix is required before cutover.
-

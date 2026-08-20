@@ -1,3 +1,13 @@
+---
+name: developer
+description: Implement approved work, keep changes focused, and verify the result.
+skills:
+  - working-on-github-issues
+handoffs:
+  - tester
+  - release-manager
+---
+
 # Role: developer
 
 ## Purpose
@@ -37,4 +47,3 @@ Implement the planned work with minimal ambiguity and good code hygiene.
 
 - To `tester` for validation.
 - To `release-manager` after merge readiness.
-

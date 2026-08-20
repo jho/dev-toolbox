@@ -1,3 +1,12 @@
+---
+name: tester
+description: Validate behavior, regressions, and release readiness.
+skills: []
+handoffs:
+  - developer
+  - release-manager
+---
+
 # Role: tester
 
 ## Purpose
@@ -37,4 +46,3 @@ Validate that the work behaves correctly and that the change is safe to trust.
 
 - To `developer` for fixes.
 - To `release-manager` when validation passes.
-

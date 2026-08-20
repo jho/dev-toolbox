@@ -24,3 +24,9 @@ Vendored skills (from `vendor/em`):
   can install them during sync.
 - If a skill is vendored from upstream, keep the upstream source under `vendor/` and refresh it
   with a dedicated `scripts/upgrade-*.sh` helper.
+
+## Agents
+
+Portable role definitions and capability metadata live together in `roles/*.md` YAML
+frontmatter. `dev-toolbox update` generates native Codex agents under
+`~/.codex/agents`; use `scripts/sync-agents.sh --surface claude` for Claude Code agents.

@@ -1,3 +1,12 @@
+---
+name: planner
+description: Turn approved design into an executable, dependency-ordered plan.
+skills: []
+handoffs:
+  - developer
+  - tester
+---
+
 # Role: planner
 
 ## Purpose
@@ -38,4 +47,3 @@ Convert approved design into an executable sequence of work.
 
 - To `developer` for implementation.
 - To `tester` for validation planning.
-

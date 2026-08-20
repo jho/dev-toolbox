@@ -66,12 +66,18 @@ done
 install_from_repo() {
   local repo_root="$1"
   local target="$2"
-  "$repo_root/scripts/sync-codex-skills.sh" "$target"
+  "$repo_root/scripts/sync-skills.sh" "$target"
 }
 
 install_deps() {
   local repo_root="$1"
   "$repo_root/scripts/run-deps.sh"
+}
+
+install_agents() {
+  local repo_root="$1"
+  local target_surface="$2"
+  "$repo_root/scripts/sync-agents.sh" --surface "$target_surface" --skills-target "$3"
 }
 
 install_shell_contract() {
@@ -110,7 +116,9 @@ set -euo pipefail
 repo_url="${repo_url}"
 repo_ref="${repo_ref}"
 embedded_repo_root="${repo_root}"
-script_name="sync-codex-skills.sh"
+script_name="sync-skills.sh"
+agent_script_name="sync-agents.sh"
+agent_surface="${surface}"
 
 usage() {
   cat <<'USAGE'
@@ -161,6 +169,9 @@ run_sync() {
     if [ -f "\$embedded_repo_root/scripts/run-deps.sh" ]; then
       "\$embedded_repo_root/scripts/run-deps.sh"
     fi
+    if [ -f "\$embedded_repo_root/scripts/\$agent_script_name" ]; then
+      "\$embedded_repo_root/scripts/\$agent_script_name" --surface "\$agent_surface" --skills-target "\$target_root"
+    fi
     return
   fi
 
@@ -171,6 +182,9 @@ run_sync() {
   "\$workdir/dev-toolbox/scripts/\$script_name" "\$target_root"
   if [ -f "\$workdir/dev-toolbox/scripts/run-deps.sh" ]; then
     "\$workdir/dev-toolbox/scripts/run-deps.sh"
+  fi
+  if [ -f "\$workdir/dev-toolbox/scripts/\$agent_script_name" ]; then
+    "\$workdir/dev-toolbox/scripts/\$agent_script_name" --surface "\$agent_surface" --skills-target "\$target_root"
   fi
 }
 
@@ -250,10 +264,11 @@ if [ -n "$script_source" ]; then
 fi
 installed_command_dir="$command_dir"
 
-if [ -n "$script_dir" ] && [ -f "$script_dir/scripts/sync-codex-skills.sh" ]; then
+if [ -n "$script_dir" ] && [ -f "$script_dir/scripts/sync-skills.sh" ]; then
   install_from_repo "$script_dir" "$target_root"
   install_deps "$script_dir"
-  install_command "$script_dir" "$installed_command_dir"
+  install_agents "$script_dir" "$surface" "$target_root"
+  install_command "$script_dir" "$installed_command_dir" "$surface"
   install_shell_contract "$state_dir" "$installed_command_dir"
   if [ "$verify" = "true" ]; then
     printf 'Installed skills:\n'
@@ -278,7 +293,8 @@ trap 'rm -rf "$workdir"' EXIT
 git clone --depth 1 --branch "$repo_ref" "$repo_url" "$workdir/dev-toolbox"
 install_from_repo "$workdir/dev-toolbox" "$target_root"
 install_deps "$workdir/dev-toolbox"
-install_command "$workdir/dev-toolbox" "$installed_command_dir"
+install_agents "$workdir/dev-toolbox" "$surface" "$target_root"
+install_command "$workdir/dev-toolbox" "$installed_command_dir" "$surface"
 install_shell_contract "$state_dir" "$installed_command_dir"
 if [ "$verify" = "true" ]; then
   printf 'Installed skills:\n'

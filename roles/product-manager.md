@@ -1,3 +1,13 @@
+---
+name: product-manager
+description: Frame the problem, define outcomes, and control product scope.
+skills:
+  - creating-prd
+handoffs:
+  - architect
+  - planner
+---
+
 # Role: product-manager
 
 ## Purpose

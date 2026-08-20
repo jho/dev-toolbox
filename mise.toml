@@ -1,5 +1,8 @@
 [tasks.sync]
-run = "./scripts/sync-codex-skills.sh"
+run = "./scripts/sync-skills.sh"
+
+[tasks.agents]
+run = "./scripts/sync-agents.sh --surface codex"
 
 [tasks.deps]
 run = "./scripts/run-deps.sh"

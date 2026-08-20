@@ -2,8 +2,8 @@
 set -euo pipefail
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-codex_home="${CODEX_HOME:-$HOME/.codex}"
-target_root="${1:-$codex_home/skills}"
+default_home="${CODEX_HOME:-$HOME/.codex}"
+target_root="${1:-$default_home/skills}"
 
 mkdir -p "$target_root"
 
