@@ -79,6 +79,104 @@ Most phases can run as one sub-agent invocation with a focused output. Use anoth
 the artifact needs revision or when the work crosses a decision boundary; do not split every bullet
 into its own agent.
 
+## Worked examples
+
+These examples show the shape of a real run. The exact native invocation syntax varies by host, but
+the role, context packet, artifact, and handoff stay the same.
+
+### Example 1: Product request with an architecture dependency
+
+Human input:
+
+> “The system must allow users to sign in without creating a password.”
+
+The harness invokes `product-manager` with the existing PRD path and asks:
+
+```text
+Turn this request into a PRD update.
+Capture the user journey, supported sign-in behavior, acceptance criteria, MVP exclusions,
+and success measure. Do not choose an identity provider or session architecture.
+Return the PRD diff and list any architecture dependencies separately.
+```
+
+Expected product-manager output:
+
+```text
+Artifact: docs/prds/account-access.md
+Product decisions: passwordless sign-in is in scope; account recovery and provider-specific
+behavior are defined at the product level.
+Architecture dependency: choose the identity-provider boundary, callback/session handling,
+and account-linking strategy.
+Open product question: none.
+```
+
+The harness presents the accepted PRD and dependency list to `architect`:
+
+```text
+Using the attached PRD update, create the smallest ADR needed for passwordless authentication.
+Compare realistic alternatives, record the accepted boundary and consequences, and state the
+constitution rules future features must follow. Do not expand the product scope.
+```
+
+After the human accepts the PRD and ADR, the harness invokes `tech-lead`:
+
+```text
+Plan this feature using the accepted PRD and ADR.
+This project does not use Event Modeling, so use the conventional Spec Kit path:
+specify → plan → tasks. Return implementation boundaries, dependencies, and verification work.
+```
+
+The resulting flow is:
+
+```text
+human request
+  → product-manager: PRD update + architecture dependency
+  → architect: accepted ADR
+  → tech-lead: spec, plan, tasks
+  → developer: implementation PR
+  → tester: acceptance and regression evidence
+```
+
+The product manager identifies the architectural question, the architect resolves it, and the tech
+lead consumes both decisions. No role silently makes a decision owned by another role.
+
+### Example 2: Event Model slice to implementation plan
+
+Assume the project already has a ratified Event Model and the user says:
+
+> “Implement the slice where a user confirms a suggested category for a transaction.”
+
+The harness gives `tech-lead` the model path, slice inventory, relevant PRD, and accepted ADRs:
+
+```text
+Select and detail the Event Model slice for confirming a suggested transaction category.
+Use em to produce the implementation-ready slice document. Preserve the model's command,
+event, views, invariants, and alternate paths. Do not invent new domain behavior.
+```
+
+The tech lead then runs the bridge with the selected slice:
+
+```text
+Bridge this ratified slice into the project's Spec Kit workflow.
+Carry commands, events, projections/views, translations or automations, invariants, scenarios,
+and failure paths into planning context. Link the governing PRD and ADRs, then produce the inputs
+for speckit-plan and speckit-tasks.
+```
+
+Expected handoff packet:
+
+```text
+Slice: slices/confirm-transaction-category.md
+Spec Kit context: feature intent, command/event contract, projection requirements, invariants,
+and test scenarios
+Next: /speckit-plan, then /speckit-tasks
+Blocked: none
+```
+
+The developer receives the generated plan and tasks—not a transcript of the modeling session—and
+implements the slice. If the slice exposes a missing product rule or cross-cutting technical
+choice, the tech lead stops and routes that question back to `product-manager` or `architect`.
+
 ## Roles
 
 ### Product manager
