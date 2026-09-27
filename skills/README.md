@@ -6,9 +6,12 @@ Current skills:
 
 Local skills:
 - [catalog-manager](catalog-manager/SKILL.md)
+- [creating-adr](creating-adr/SKILL.md)
 - [creating-prd](creating-prd/SKILL.md)
 - [creating-github-issues](creating-github-issues/SKILL.md)
+- [em-sdd-bridge](em-sdd-bridge/SKILL.md)
 - [listing-github-issues](listing-github-issues/SKILL.md)
+- [updating-prd](updating-prd/SKILL.md)
 - [working-on-github-issues](working-on-github-issues/SKILL.md)
 
 Vendored skills (from `vendor/em`):
@@ -30,3 +33,7 @@ Vendored skills (from `vendor/em`):
 Portable role definitions and capability metadata live together in `roles/*.md` YAML
 frontmatter. `dev-toolbox update` generates native Codex agents under
 `~/.codex/agents`; use `scripts/sync-agents.sh --surface claude` for Claude Code agents.
+
+The current role set is product manager, architect, tech lead, developer, tester, and release
+manager. The tech lead absorbs the former planner role and supports both Event Model and
+conventional Spec Kit planning paths.

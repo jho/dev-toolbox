@@ -3,6 +3,13 @@ name: developer
 description: Implement approved work, keep changes focused, and verify the result.
 skills:
   - working-on-github-issues
+capabilities:
+  - read
+  - search
+  - shell
+  - edit
+  - git
+  - github
 handoffs:
   - tester
   - release-manager

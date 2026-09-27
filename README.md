@@ -10,11 +10,11 @@ This repo is intended to hold:
 - MCP server definitions
 - helper scripts and templates
 
-The initial role model is intentionally compressed:
+The role model is intentionally compressed:
 
 - `product-manager`
 - `architect`
-- `planner`
+- `tech-lead`
 - `developer`
 - `tester`
 - `release-manager`

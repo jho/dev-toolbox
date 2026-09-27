@@ -2,6 +2,12 @@
 name: tester
 description: Validate behavior, regressions, and release readiness.
 skills: []
+capabilities:
+  - read
+  - search
+  - shell
+  - edit
+  - git
 handoffs:
   - developer
   - release-manager

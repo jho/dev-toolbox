@@ -103,6 +103,15 @@ updates the constitution or engineering policy, and opens one reviewable decisio
 The tech lead then uses the accepted ADR as planning context; the ADR is not itself an implementation
 plan.
 
+The reusable role and skill surfaces for this flow are:
+
+- `product-manager` → `creating-prd`, `updating-prd`
+- `architect` → `creating-adr`
+- `tech-lead` → `event-modeling`, `em-sdd-bridge`, and the Spec Kit planning skills
+
+These are portable instructions, not autonomous ownership. The human orchestrator still decides
+when a PRD or ADR is accepted and when work is ready to move to the next phase.
+
 Product and architecture work may both be needed. The human orchestrator decides which question must
 be resolved first.
 

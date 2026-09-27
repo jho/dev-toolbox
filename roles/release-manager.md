@@ -2,6 +2,12 @@
 name: release-manager
 description: Move approved work through merge and release readiness safely.
 skills: []
+capabilities:
+  - read
+  - search
+  - shell
+  - git
+  - github
 handoffs:
   - tester
   - developer
