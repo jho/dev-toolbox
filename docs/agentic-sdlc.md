@@ -74,8 +74,21 @@ The product manager runs `/creating-prd` for a new product area, or `/updating-p
 project already has a relevant PRD. The workflow clarifies users, behavior, acceptance criteria,
 scope, and non-goals, then produces a reviewable PRD change and any needed product backlog issue.
 
-After the product decision is accepted, the tech lead runs the planning workflow for the resulting
-feature.
+The product manager also identifies architectural implications without resolving them. If the feature
+requires a new cross-cutting technical decision, the flow continues through the architect before
+planning:
+
+```text
+/creating-prd or /updating-prd
+  → identify architecture dependencies
+  → /creating-adr when a decision is needed
+  → accepted PRD + ADR context
+  → tech lead planning
+```
+
+For example, passwordless authentication may require product decisions about the sign-in experience
+and an architecture decision about identity-provider integration, session handling, and account
+mapping. Both artifacts should be accepted before implementation planning begins.
 
 ### Architecture-driven work
 
