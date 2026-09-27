@@ -66,36 +66,29 @@ The user’s initial input determines which specialist is needed first.
 
 ### Product-driven work
 
-```text
-User problem
-  → product manager
-  → product requirements and acceptance criteria
-  → tech lead
-```
+Input in Codex:
 
-Example:
+> “The system must allow the user to log in with passwordless authentication.”
 
-> “Users need a faster way to approve a submitted request.”
+The product manager runs `/creating-prd` for a new product area, or `/updating-prd` when the
+project already has a relevant PRD. The workflow clarifies users, behavior, acceptance criteria,
+scope, and non-goals, then produces a reviewable PRD change and any needed product backlog issue.
 
-The product manager clarifies the users, workflow, success criteria, and scope. Once the product
-intent is clear, the tech lead designs the implementation path.
+After the product decision is accepted, the tech lead runs the planning workflow for the resulting
+feature.
 
 ### Architecture-driven work
 
-```text
-Architecture question
-  → architect
-  → research and decision record
-  → implementation context
-  → tech lead
-```
+Input in Codex:
 
-Example:
+> “The system must support multiple notification providers without coupling the domain to one vendor.”
 
-> “The system needs to support multiple notification providers without coupling the domain to one vendor.”
+The architect uses `/listing-github-issues` to find or confirm the architecture backlog item, then
+runs `/creating-adr`. That workflow researches the alternatives, records the accepted boundary,
+updates the constitution or engineering policy, and opens one reviewable decision PR.
 
-The architect compares the meaningful alternatives, records the accepted boundary, and updates the
-engineering policy that future plans must follow.
+The tech lead then uses the accepted ADR as planning context; the ADR is not itself an implementation
+plan.
 
 Product and architecture work may both be needed. The human orchestrator decides which question must
 be resolved first.
@@ -110,10 +103,11 @@ When a canonical Event Model exists:
 
 ```text
 Ratified Event Model
-  → elaborate and slice with em
+  → /event-modeling slice
   → implementation-ready slice document
-  → em-sdd-bridge
-  → Spec Kit plan and tasks
+  → /em-sdd-bridge
+  → /speckit-plan
+  → /speckit-tasks
 ```
 
 The Event Model remains authoritative for commands, events, views, translations, automations, and
@@ -126,13 +120,17 @@ When no Event Model exists:
 
 ```text
 Approved requirements or PRD
-  → Spec Kit specification
-  → plan
-  → tasks
+  → /speckit-specify
+  → /speckit-plan
+  → /speckit-tasks
 ```
 
 The tech lead should not invent Event Model artifacts merely to satisfy the workflow. Conventional
 Spec Kit planning is a supported first-class path.
+
+For either path, the developer uses `/speckit-implement` or the project’s equivalent implementation
+workflow, then opens the focused pull request. The tester runs the relevant checks and sends failures
+back to the developer; the release manager verifies CI and merges when ready.
 
 ## Artifact ownership
 
