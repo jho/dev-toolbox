@@ -13,6 +13,72 @@ Design → Plan → Implement → Test → Release
 The loop is intentionally small. A normal run should produce one coherent change and one focused
 pull request rather than forcing every step through a separate ticket or agent conversation.
 
+## Using the roles in a harness
+
+The role files are portable agent definitions, not an orchestration engine. A harness—Codex,
+Claude Code, or a project-specific runner—owns the conversation, permissions, context selection,
+approval gates, and delegation. The role provides the specialist lens and the skills it should use.
+
+Install or refresh the native agents and skills with:
+
+```bash
+./install.sh --surface codex
+# or
+./install.sh --surface claude
+
+dev-toolbox update
+```
+
+The sync step generates Codex agents under `~/.codex/agents` and Claude agents under
+`~/.claude/agents`. It also copies the canonical skills and vendored Event Modeling skill into the
+corresponding skills directory. A local checkout can sync agents directly with
+`scripts/sync-agents.sh` when a harness uses a custom target directory.
+
+### Harness responsibilities
+
+For each sub-agent run, the orchestrator should provide a small context packet:
+
+```text
+Objective: the question this specialist must answer
+Source of truth: paths or URLs the specialist may rely on
+Constraints: accepted product, architecture, policy, and scope boundaries
+Allowed changes: the artifacts this run may create or edit
+Expected output: artifact, decision, review, or plan
+Stop conditions: unresolved questions that require the human or another role
+```
+
+Then the harness should:
+
+1. Select the role whose responsibility matches the current question.
+2. Give it the context packet and the relevant artifacts—not the entire project by default.
+3. Let it use the skills named by that role.
+4. Review the returned artifact, assumptions, and open questions.
+5. Decide whether to accept the result, ask for revision, or invoke the next role.
+
+The `handoffs` in role frontmatter are routing suggestions for the harness. They do not make an
+agent autonomous, grant extra permissions, or require a separate sub-agent call. Likewise, a skill
+listed by a role is a reusable procedure the agent may load when applicable; it is not a promise
+that every host has that skill installed. The harness should stop when a product or architecture
+decision needs human acceptance.
+
+### Recommended one-input run
+
+For normal feature work, keep the orchestration shallow:
+
+```text
+human input
+  → product-manager or architect
+  → optional second design role
+  → tech-lead
+  → developer
+  → tester
+  → release-manager or human merge
+```
+
+Most phases can run as one sub-agent invocation with a focused output. Use another invocation when
+the artifact needs revision or when the work crosses a decision boundary; do not split every bullet
+into its own agent.
+
 ## Roles
 
 ### Product manager
@@ -111,6 +177,11 @@ The reusable role and skill surfaces for this flow are:
 
 These are portable instructions, not autonomous ownership. The human orchestrator still decides
 when a PRD or ADR is accepted and when work is ready to move to the next phase.
+
+In a harness, the product-manager run should return two things: the PRD change and a short list of
+architecture dependencies. The architect is invoked only for those dependencies. Once the PRD and
+any required ADR are accepted, the tech-lead receives their paths as planning context rather than
+reconstructing the prior conversations.
 
 Product and architecture work may both be needed. The human orchestrator decides which question must
 be resolved first.

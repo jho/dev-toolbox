@@ -39,6 +39,12 @@ See [docs/vendoring.md](docs/vendoring.md) for the subtree + dependency pattern.
 See [docs/dotfiles-boundary.md](docs/dotfiles-boundary.md) for what stays in dotfiles vs dev-toolbox.
 See [catalog/README.md](catalog/README.md) for the dev-toolbox catalog.
 
+The roles are designed to be used as focused sub-agents under a human-orchestrated harness. The
+portable definitions are synced into native Codex or Claude agent directories; their `skills` and
+`handoffs` metadata describe capabilities and suggested routing, while the harness retains control
+of context, permissions, approvals, and delegation. See [docs/agentic-sdlc.md](docs/agentic-sdlc.md)
+for the context-packet contract and examples.
+
 ## Install
 
 Run `./install.sh` to sync the repo's skills into the current Codex or Claude skills directory.
