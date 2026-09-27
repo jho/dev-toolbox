@@ -52,3 +52,9 @@ Validate that the work behaves correctly and that the change is safe to trust.
 
 - To `developer` for fixes.
 - To `release-manager` when validation passes.
+
+## Interaction contract
+
+Run the planned checks against the acceptance criteria and report evidence or failures. Do not
+redesign the feature or silently waive a failed criterion; route failures to the developer and
+decision gaps to the relevant planning role.

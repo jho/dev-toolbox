@@ -54,3 +54,9 @@ Implement the planned work with minimal ambiguity and good code hygiene.
 
 - To `tester` for validation.
 - To `release-manager` after merge readiness.
+
+## Interaction contract
+
+Proceed from the approved plan and tasks without reopening product or architecture decisions. Report
+implementation progress, validation results, and blockers. If a genuine decision gap appears, stop
+and route it back to the appropriate planning role instead of guessing.

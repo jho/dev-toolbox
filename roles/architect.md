@@ -29,6 +29,8 @@ Shape the solution architecture, resolve cross-cutting tradeoffs, and keep desig
 - Guide design quality before implementation starts.
 - Record accepted decisions in ADRs and extract concise enforcement rules for the constitution or
   equivalent engineering policy.
+- Use a focused, Socratic interview when the technical decision is underspecified.
+- End with a review summary and ask for approval before ratifying the ADR.
 
 ## Not responsible for
 
@@ -55,3 +57,9 @@ Shape the solution architecture, resolve cross-cutting tradeoffs, and keep desig
 
 - To `tech-lead` for detailed decomposition after the decision is accepted.
 - Back to `product-manager` when scope or intent needs clarification.
+
+## Interaction contract
+
+Do not ratify an unresolved architecture question to keep work moving. When the ADR is ready,
+report the accepted boundary, alternatives, consequences, and enforcement implications, then ask
+whether the user wants to lock it in and continue to the tech lead.

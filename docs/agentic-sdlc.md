@@ -13,6 +13,17 @@ Design → Plan → Implement → Test → Release
 The loop is intentionally small. A normal run should produce one coherent change and one focused
 pull request rather than forcing every step through a separate ticket or agent conversation.
 
+The roles divide into two modes:
+
+```text
+PLAN:    product-manager ↔ human → architect ↔ human → tech-lead ↔ human
+EXECUTE: developer → tester → release-manager
+```
+
+Planning agents use Socratic interview flows and pause at decision boundaries. Execution agents use
+approved artifacts and continue automatically until they finish, fail validation, or hit a genuine
+blocker.
+
 ## Using the roles in a harness
 
 The role files are portable agent definitions, not an orchestration engine. A harness—Codex,
@@ -60,6 +71,42 @@ agent autonomous, grant extra permissions, or require a separate sub-agent call.
 listed by a role is a reusable procedure the agent may load when applicable; it is not a promise
 that every host has that skill installed. The harness should stop when a product or architecture
 decision needs human acceptance.
+
+### Planning versus execution
+
+The planning agents should not silently turn an exploratory conversation into a committed change.
+Each should finish with:
+
+1. A reviewable artifact or proposed artifact change.
+2. A concise summary of decisions, assumptions, and open questions.
+3. A suggested next-step prompt that asks for the human's approval to continue.
+
+Typical transition prompts are:
+
+```text
+PRD drafted and product scope is clear. Shall I lock it in and ask the architect to resolve
+the identified architecture dependency?
+
+ADR drafted with the accepted boundary and consequences. Shall I lock it in and ask the tech lead
+to plan implementation?
+
+Plan and tasks are ready and respect the accepted PRD, ADRs, and Event Model slice. Shall I hand
+them to the developer for implementation?
+```
+
+Once the human approves the transition, the harness can invoke the next role without repeating the
+interview. Pass the artifact paths and the approval as the next context packet.
+
+Execution agents should behave differently:
+
+- `developer` implements the approved plan and reports blockers; it does not renegotiate scope.
+- `tester` runs the planned validation and reports evidence or failures; it does not redesign the
+  feature.
+- `release-manager` checks merge/release readiness and reports the gate result; it does not make
+  unresolved product or architecture decisions.
+
+If execution uncovers a real decision gap, it returns to the appropriate planning role rather than
+guessing.
 
 ### Recommended one-input run
 
@@ -254,6 +301,10 @@ For example, passwordless authentication may require product decisions about the
 and an architecture decision about identity-provider integration, session handling, and account
 mapping. Both artifacts should be accepted before implementation planning begins.
 
+The product-manager interaction should end with a question such as: “The PRD is ready for review
+and this architecture dependency is identified. Shall I lock in the product decision and move to
+the architect?”
+
 ### Architecture-driven work
 
 Input in Codex:
@@ -266,6 +317,10 @@ updates the constitution or engineering policy, and opens one reviewable decisio
 
 The tech lead then uses the accepted ADR as planning context; the ADR is not itself an implementation
 plan.
+
+The architect and tech lead use the same pause-and-confirm pattern. They may ask focused questions
+while deciding, but they should not start implementation automatically when the decision or plan is
+complete.
 
 The reusable role and skill surfaces for this flow are:
 

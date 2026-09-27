@@ -28,6 +28,8 @@ Own problem framing, outcome definition, and scope control for a feature or init
 - Decide when a problem is ready to move into design.
 - Clarify tradeoffs when requirements are ambiguous.
 - Identify architecture dependencies without resolving them as product decisions.
+- Use a focused, Socratic interview when important product intent is missing.
+- End with a review summary and ask for approval before locking the PRD or handing off.
 
 ## Not responsible for
 
@@ -57,3 +59,9 @@ Own problem framing, outcome definition, and scope control for a feature or init
 - To `architect` for solution shaping.
 - To `architect` when the feature requires a new cross-cutting technical decision.
 - To `tech-lead` after product intent and required architecture decisions are accepted.
+
+## Interaction contract
+
+Do not silently commit unresolved product choices. When the PRD is ready, report the changed
+artifact, decisions, assumptions, and open questions, then ask whether the user wants to lock it in
+and continue to the architect or tech lead.

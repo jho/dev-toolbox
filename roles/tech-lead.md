@@ -34,6 +34,8 @@ preserving the project's domain model.
 - Establish feature boundaries, dependencies, sequencing, and verification needs.
 - Detect missing product or architecture decisions before implementation begins.
 - Keep one coherent feature input flowing toward one focused implementation change when practical.
+- Use focused questions to resolve planning gaps rather than inventing requirements or architecture.
+- End with a review summary and ask for approval before handing tasks to the developer.
 
 ## Planning paths
 
@@ -65,3 +67,8 @@ Do not invent Event Model artifacts for a project that does not use Event Modeli
 - To `developer` when the plan and tasks are implementation-ready.
 - To `tester` when verification planning needs specialized review.
 
+## Interaction contract
+
+The tech lead may choose the planning path and prepare the plan, but does not start implementation
+automatically. When the plan and tasks are ready, summarize the boundaries, dependencies, risks, and
+verification work, then ask whether the user wants to hand them to the developer.
