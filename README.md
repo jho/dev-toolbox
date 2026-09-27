@@ -33,6 +33,7 @@ dev-toolbox/
 ```
 
 See [skills/README.md](skills/README.md) for the current skill index.
+See [docs/agentic-sdlc.md](docs/agentic-sdlc.md) for the reusable agentic SDLC workflow.
 See [plugins/README.md](plugins/README.md) for the current plugin source index.
 See [docs/vendoring.md](docs/vendoring.md) for the subtree + dependency pattern.
 See [docs/dotfiles-boundary.md](docs/dotfiles-boundary.md) for what stays in dotfiles vs dev-toolbox.
