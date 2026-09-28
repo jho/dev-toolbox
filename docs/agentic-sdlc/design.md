@@ -1,7 +1,7 @@
 # Agentic SDLC Design
 
 This document describes the design behind the reusable agentic SDLC assets. For the human-facing
-quick start, see [agentic-sdlc.md](agentic-sdlc.md).
+quick start, see [README.md](README.md).
 
 ## Operating model
 
@@ -140,4 +140,3 @@ Do not invent Event Model artifacts for a project that does not use Event Modeli
 
 Agents preserve the current source of truth, state assumptions explicitly, and leave a reviewable
 artifact at every meaningful decision boundary.
-

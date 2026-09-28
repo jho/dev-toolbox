@@ -4,7 +4,7 @@ Use the toolbox as a lightweight Plan → Execute workflow. You remain the decis
 help turn your request into reviewed artifacts and then carry out the approved work.
 
 For the detailed design, harness contract, and role semantics, see
-[agentic-sdlc-design.md](agentic-sdlc-design.md).
+[design.md](design.md).
 
 ## The workflow
 
