@@ -8,13 +8,30 @@ For the detailed design, harness contract, and role semantics, see
 
 ## The workflow
 
-```text
-                    PLAN
-Human → Product Manager → Architect → Tech Lead
-          ↕ approval       ↕ approval    ↕ approval
-                    EXECUTE
-              Developer → Tester → Release
-                           ↖ fix/retest ↙
+```mermaid
+flowchart LR
+    H[Human / orchestrator]
+
+    subgraph P[PLAN — interactive approval gates]
+        PM[Product manager]
+        A[Architect]
+        TL[Tech lead]
+        PM -->|PRD / product questions| A
+        A -->|ADR / architecture questions| TL
+    end
+
+    subgraph E[EXECUTE — orchestration]
+        D[Developer]
+        T[Tester]
+        R[Release manager]
+        D --> T --> R
+        T -. failure .-> D
+    end
+
+    H --> PM
+    H -. approve .-> A
+    H -. approve .-> TL
+    H -. approve plan .-> D
 ```
 
 Planning roles are interactive. They ask focused questions, produce artifacts, and ask before
