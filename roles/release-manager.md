@@ -2,6 +2,12 @@
 name: release-manager
 description: Move approved work through merge and release readiness safely.
 skills: []
+capabilities:
+  - read
+  - search
+  - shell
+  - git
+  - github
 handoffs:
   - tester
   - developer
@@ -46,3 +52,9 @@ Move approved work through merge, deploy, and cutover safely.
 
 - Back to `tester` if release validation fails.
 - Back to `developer` if a fix is required before cutover.
+
+## Interaction contract
+
+Check the merge and release gates from the approved work and report the result. Do not resolve
+unresolved product or architecture questions as a release decision; return those to the planning
+roles or human orchestrator.
