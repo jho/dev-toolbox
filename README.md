@@ -10,14 +10,14 @@ This repo is intended to hold:
 - MCP server definitions
 - helper scripts and templates
 
-The initial role model is intentionally compressed:
+The role model follows the SDLC:
 
-- `product-manager`
-- `architect`
-- `planner`
-- `developer`
-- `tester`
-- `release-manager`
+- `analyze`
+- `design`
+- `plan`
+- `implement`
+- `verify`
+- `release`
 
 ## Repo layout
 
@@ -37,6 +37,19 @@ See [plugins/README.md](plugins/README.md) for the current plugin source index.
 See [docs/vendoring.md](docs/vendoring.md) for the subtree + dependency pattern.
 See [docs/dotfiles-boundary.md](docs/dotfiles-boundary.md) for what stays in dotfiles vs dev-toolbox.
 See [catalog/README.md](catalog/README.md) for the dev-toolbox catalog.
+
+## Agentic SDLC
+
+The toolbox provides a lifecycle workflow for human-gated requirements and design followed by
+delegated planning, implementation, verification, and release. Start with the [agentic SDLC usage
+guide](docs/agentic-sdlc/README.md); the [design reference](docs/agentic-sdlc/design.md) explains the
+underlying context and work-graph contract.
+
+The roles are designed to be used as focused sub-agents under a human-orchestrated harness. The
+portable definitions are synced into native Codex or Claude agent directories; their `skills` and
+`handoffs` metadata describe capabilities and suggested routing, while the harness retains control
+of context, permissions, approvals, and delegation. See the usage guide for the context-packet
+contract and examples.
 
 ## Install
 

@@ -7,7 +7,8 @@ metadata:
 
 # Creating a PRD
 
-Use this skill when a product-manager agent needs to turn an idea, problem, or initiative into a clear product requirements document.
+Use this skill when the `analyze` stage needs to turn an idea, problem, or initiative into a clear
+product requirements document.
 
 ## What this skill does
 

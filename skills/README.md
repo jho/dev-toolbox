@@ -6,9 +6,12 @@ Current skills:
 
 Local skills:
 - [catalog-manager](catalog-manager/SKILL.md)
+- [creating-adr](creating-adr/SKILL.md)
 - [creating-prd](creating-prd/SKILL.md)
 - [creating-github-issues](creating-github-issues/SKILL.md)
 - [listing-github-issues](listing-github-issues/SKILL.md)
+- [slices-to-backlog](slices-to-backlog/SKILL.md)
+- [updating-prd](updating-prd/SKILL.md)
 - [working-on-github-issues](working-on-github-issues/SKILL.md)
 
 Vendored skills (from `vendor/em`):
@@ -30,3 +33,7 @@ Vendored skills (from `vendor/em`):
 Portable role definitions and capability metadata live together in `roles/*.md` YAML
 frontmatter. `dev-toolbox update` generates native Codex agents under
 `~/.codex/agents`; use `scripts/sync-agents.sh --surface claude` for Claude Code agents.
+
+The current role set follows the SDLC: analyze, design, plan, implement, verify, and release. The
+planning stage supports both Event Model and conventional Spec Kit paths; external harnesses own
+parallel execution, worktrees, scheduling, and merge orchestration.
