@@ -9,8 +9,8 @@ Local skills:
 - [creating-adr](creating-adr/SKILL.md)
 - [creating-prd](creating-prd/SKILL.md)
 - [creating-github-issues](creating-github-issues/SKILL.md)
-- [em-sdd-bridge](em-sdd-bridge/SKILL.md)
 - [listing-github-issues](listing-github-issues/SKILL.md)
+- [slices-to-backlog](slices-to-backlog/SKILL.md)
 - [updating-prd](updating-prd/SKILL.md)
 - [working-on-github-issues](working-on-github-issues/SKILL.md)
 
@@ -34,6 +34,6 @@ Portable role definitions and capability metadata live together in `roles/*.md` 
 frontmatter. `dev-toolbox update` generates native Codex agents under
 `~/.codex/agents`; use `scripts/sync-agents.sh --surface claude` for Claude Code agents.
 
-The current role set is product manager, architect, tech lead, developer, tester, and release
-manager. The tech lead absorbs the former planner role and supports both Event Model and
-conventional Spec Kit planning paths.
+The current role set follows the SDLC: analyze, design, plan, implement, verify, and release. The
+planning stage supports both Event Model and conventional Spec Kit paths; external harnesses own
+parallel execution, worktrees, scheduling, and merge orchestration.
