@@ -1,13 +1,14 @@
 # Agentic SDLC Usage Guide
 
-The toolbox uses lifecycle-stage agents. Requirements and design are human-gated; everything after
-design is prepared for delegated execution by an external Codex/Claude-compatible harness.
+The toolbox uses lifecycle-stage agents. Requirements and design are human-gated; planning performs
+an independent intake check before everything downstream is prepared for delegated execution by an
+external Codex/Claude-compatible harness.
 
 ```mermaid
 flowchart LR
     H[Human] --> A[Analyze]
-    A --> D[Design]
-    D --> P[Plan]
+    A --> D[Design: ready to plan?]
+    D --> P[Plan: intake validation]
     P --> I[Implement]
     I --> V[Verify]
     V --> R[Release]
@@ -22,7 +23,8 @@ The system must allow users to sign in without creating a password.
 ```
 
 `analyze` inspects existing product context, interviews the human when needed, and creates or
-updates the PRD. `design` resolves architecture and Event Model changes. Both stop for approval.
+updates the PRD. `design` resolves architecture and Event Model changes, performs a design handoff
+review, and asks whether the candidate work is ready to plan. Both stop for approval.
 
 ## Plan an Event Modeled change
 
@@ -32,8 +34,10 @@ Inspect the changed model and slices, validate them with em, and produce the Mar
 work graph. Do not create branches or PRs.
 ```
 
-The plan stage invokes `slices-to-backlog`, which discovers changed `.em` files, slice documents,
-and `.event-modeling.md` state from the current worktree. It does not require a model-file argument.
+The plan stage first validates the incoming design handoff. For Event Modeled work it then invokes
+`slices-to-backlog`, which discovers changed `.em` files, slice documents, and `.event-modeling.md`
+state from the current worktree. It does not require a model-file argument. If intake fails, the
+planner returns blockers to design instead of creating a speculative plan.
 
 ## Plan a conventional change
 
