@@ -3,6 +3,7 @@ name: design
 description: Turn accepted requirements into reviewed architecture and domain design.
 skills:
   - creating-adr
+  - designing-feature-ui
   - event-modeling
 capabilities:
   - read

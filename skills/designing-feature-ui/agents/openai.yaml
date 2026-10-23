@@ -1,0 +1,7 @@
+interface:
+  display_name: "Design Feature UI"
+  short_description: "Design a UI from approved requirements"
+  default_prompt: "Use $designing-feature-ui to turn this approved feature into a wireframe and interaction contract."
+
+policy:
+  allow_implicit_invocation: true
