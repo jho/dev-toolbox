@@ -7,7 +7,7 @@ metadata:
 
 # Slices to backlog
 
-Use this skill during the `plan` stage of an Event Modeled project. It is the toolbox-level
+Use this skill after planner intake validation during the `plan` stage of an Event Modeled project. It is the toolbox-level
 stand-in for a future `/em:plan` workflow; it does not modify the upstream `em` tool.
 
 The planner discovers active `.em` files from the worktree and binds each model to the adjacent
@@ -44,6 +44,8 @@ The helper at `scripts/slices_to_backlog.py` can produce the standard JSON and M
 - Preserve the Event Model and linked slice documents as the domain source of truth.
 - Identify dependencies only when supported by model structure or explicit implementation context;
   mark uncertain relationships for Tech Lead review.
+- Do not decide whether a design is ready for planning. The planner role owns intake validation;
+  this skill extracts the approved candidate set and reports the model-backed work graph.
 - Do not create branches, worktrees, commits, pull requests, or GitHub issues by default.
 - GitHub issue creation is an explicit follow-up using the existing issue-creation skill.
 - Parallel execution, worktree allocation, scheduling, CI watching, and merging belong to an

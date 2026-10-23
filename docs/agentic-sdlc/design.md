@@ -22,8 +22,8 @@ mode. Skills provide the procedure; generated stage agents provide the responsib
 | Stage | Inputs | Output | Gate |
 |---|---|---|---|
 | Analyze | Raw request, PRD, backlog | Reviewed requirements and dependencies | Human approval |
-| Design | Accepted requirements, ADRs, model | Reviewed design and slices | Human approval |
-| Plan | Approved design and current worktree | Markdown plan and JSON work graph | Harness handoff |
+| Design | Accepted requirements, ADRs, model | Reviewed design, explicit candidate set, planning handoff | Human approval to plan |
+| Plan | Approved design, handoff, current worktree | Intake verdict, Markdown plan and JSON work graph | Harness handoff |
 | Implement | One work-graph item | Code, tests, evidence | Verification |
 | Verify | Work item or cumulative stack | Evidence or concrete failures | Release readiness |
 | Release | Verified work graph | Merge/release status and lifecycle updates | Repository policy |
@@ -51,6 +51,8 @@ For Event Modeled projects:
 ```text
 approved requirements
   → design updates the Event Model and slice documents
+  → design asks the human whether the candidate set is ready to plan
+  → plan validates the incoming handoff and slice specifications
   → plan runs slices-to-backlog against the current worktree
   → external harness executes the work graph
 ```
@@ -67,6 +69,23 @@ approved requirements → plan derives conventional specification/plan/tasks
 
 The planning stage must not invent Event Model artifacts for a project that does not use Event
 Modeling.
+
+### Two planning gates
+
+The design stage owns the human-facing handoff. It reviews whether the design is coherent and
+names the exact slices or features proposed for planning. For Event Modeled work, that review
+includes scenarios, invariants, error paths, UI/API artifacts, cross-slice dependencies, and known
+implementation prerequisites. It ends with an explicit prompt such as: “The design is ready for
+planning. Shall I hand it to the planner?”
+
+The plan stage owns an independent intake gate. It verifies that the incoming candidate set is
+explicit and that each item is sufficiently specified to decompose into tasks without inventing
+product or architecture decisions. `em --slice-ready` is necessary but not sufficient: the planner
+also checks dependencies, shared capabilities, UI/API work, verification coverage, and foundation
+issues. A failed intake returns concrete blockers to design; it does not produce a speculative plan.
+
+`slices-to-backlog` remains a mechanical work-graph extractor after intake validation. It reports
+model-backed items and dependencies but does not decide whether design is ready for planning.
 
 ## Work-graph contract
 
