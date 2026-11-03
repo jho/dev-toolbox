@@ -63,7 +63,10 @@ for each candidate operation:
 
 Create one binding file per system when the project convention supports it, such as
 `typespec/systems/<system>.tsp`. Keep `main.tsp` as the assembly entry point and shared definitions
-in a common file. Follow the project layout when it uses another naming convention.
+in a common file. Group operations in named TypeSpec interfaces rather than leaving operations at
+namespace scope. When a generated contract exposes an interface in the same namespace, extend it
+and redeclare operations where HTTP decorators or transport projections are required. Follow the
+project layout when it uses another naming convention.
 
 ### 2. Map operations to source behavior
 
@@ -160,29 +163,35 @@ model Account {
 The system binding imports that contract and defines the actual HTTP API:
 
 ```tsp
-namespace Api.Accounts;
+namespace Accounts {
+  model CreateAccountRequest {
+    name: string;
+  }
 
-using Accounts;
-
-model CreateAccountRequest {
-  name: string;
+  /**
+   * HTTP bindings extend the generated domain operation set, then redeclare operations where
+   * HTTP decorators or transport projections are required.
+   */
+  @route("/v1")
+  interface HttpApi extends Commands {
+    /**
+     * EM mapping:
+     * - System: accounts
+     * - Slice: create-account
+     * - Command: Commands.createAccount
+     * - Projection: ownerId comes from the authenticated principal
+     * - Result: Account
+     */
+    @route("/accounts")
+    @post
+    op createAccount(
+      @body body: CreateAccountRequest
+    ): Account;
+  }
 }
-
-/**
- * EM mapping:
- * - System: accounts
- * - Slice: create-account
- * - Command: Accounts.Commands.createAccount
- * - Projection: ownerId comes from the authenticated principal
- * - Result: Accounts.Account
- */
-@route("/v1/accounts")
-@post
-op createAccount(
-  @body body: CreateAccountRequest
-): Account;
 ```
 
-This is a valid binding because it makes the transport projection explicit. It does not claim that
-the HTTP operation structurally implements the domain command: the application layer adapts the
-session principal and returns the resulting read model.
+This is a valid binding because the HTTP interface extends the generated `Commands` interface while
+making the transport projection explicit. The application layer still adapts the authenticated
+principal and returns the resulting read model; interface inheritance provides contract linkage,
+not runtime implementation.
