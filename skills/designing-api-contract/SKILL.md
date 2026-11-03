@@ -59,7 +59,7 @@ for each candidate operation:
 | Source | Which approved model, slice, feature, or requirement defines it? |
 | Intent | Is it a resource read, CRUD mutation, domain command, search, or workflow? |
 | Caller | Web client, MCP, worker, integration, or another system? |
-| Scope | What principal, household, tenant, or resource scope applies? |
+| Scope | What principal, tenant, account, or resource scope applies? |
 
 Create one binding file per system when the project convention supports it, such as
 `typespec/systems/<system>.tsp`. Keep `main.tsp` as the assembly entry point and shared definitions
@@ -144,43 +144,43 @@ Return:
 An Event Model project may have this generated domain contract:
 
 ```tsp
-namespace IAM;
+namespace Accounts;
 
 interface Commands {
-  op createInitialHousehold(userId: string, name: string): void;
+  op createAccount(ownerId: string, name: string): void;
 }
 
-model CurrentHousehold {
+model Account {
   id: string;
   name: string;
-  role: string;
+  status: string;
 }
 ```
 
 The system binding imports that contract and defines the actual HTTP API:
 
 ```tsp
-namespace Nemeo.IAM;
+namespace Api.Accounts;
 
-using IAM;
+using Accounts;
 
-model CreateInitialHouseholdRequest {
+model CreateAccountRequest {
   name: string;
 }
 
 /**
  * EM mapping:
- * - System: iam
- * - Slice: create-initial-household
- * - Command: IAM.Commands.createInitialHousehold
- * - Projection: userId comes from the authenticated session
- * - Result: IAM.CurrentHousehold
+ * - System: accounts
+ * - Slice: create-account
+ * - Command: Accounts.Commands.createAccount
+ * - Projection: ownerId comes from the authenticated principal
+ * - Result: Accounts.Account
  */
-@route("/v1/households")
+@route("/v1/accounts")
 @post
-op createInitialHousehold(
-  @body body: CreateInitialHouseholdRequest
-): CurrentHousehold;
+op createAccount(
+  @body body: CreateAccountRequest
+): Account;
 ```
 
 This is a valid binding because it makes the transport projection explicit. It does not claim that
