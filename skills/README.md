@@ -9,6 +9,7 @@ Local skills:
 - [creating-adr](creating-adr/SKILL.md)
 - [creating-prd](creating-prd/SKILL.md)
 - [designing-feature-ui](designing-feature-ui/SKILL.md)
+- [designing-api-contract](designing-api-contract/SKILL.md)
 - [creating-github-issues](creating-github-issues/SKILL.md)
 - [listing-github-issues](listing-github-issues/SKILL.md)
 - [slices-to-backlog](slices-to-backlog/SKILL.md)
