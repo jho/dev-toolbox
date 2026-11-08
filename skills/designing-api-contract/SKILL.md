@@ -46,6 +46,24 @@ When an Event Model project is present, run its generator first—for example,
 `em api generate <model>.em`—then import the generated contract into the system binding. When a
 project uses another source format, use that project's generated or approved contract instead.
 
+For EM 1.22 or newer, prefer the bindable generated shape:
+
+- use generated formatted scalars such as `Uuid` instead of redeclaring identifier types;
+- extend the generated `Commands` and `Views` interfaces when their public operation set matches
+  the application boundary;
+- redeclare inherited operations with HTTP decorators and transport projections as needed;
+- derive request projections from generated command payload models (for example,
+  `OmitProperties<CreateThing, "ownerId">` when the owner comes from the authenticated principal);
+- use TypeSpec augment decorators for field-level transport metadata instead of copying generated
+  models.
+
+Do not expose unrelated generated commands merely to satisfy interface inheritance. If the public
+HTTP boundary intentionally combines or branches domain operations, keep those commands internal
+to the application translation and use an explicit binding interface with traceable mappings.
+Projects on older EM versions should preserve the same ownership and mapping rules, but may need
+named handwritten projections until the generated contract supports payload models and bindable
+interfaces.
+
 ## Workflow
 
 ### 1. Build the system inventory
@@ -61,12 +79,14 @@ for each candidate operation:
 | Caller | Web client, MCP, worker, integration, or another system? |
 | Scope | What principal, tenant, account, or resource scope applies? |
 
-Create one binding file per system when the project convention supports it, such as
-`typespec/systems/<system>.tsp`. Keep `main.tsp` as the assembly entry point and shared definitions
-in a common file. Group operations in named TypeSpec interfaces rather than leaving operations at
-namespace scope. When a generated contract exposes an interface in the same namespace, extend it
-and redeclare operations where HTTP decorators or transport projections are required. Follow the
-project layout when it uses another naming convention.
+Create one binding entry point per system when the project convention supports it. For a new
+TypeSpec project, prefer a self-contained system directory such as
+`typespec/<system>/main.tsp`; keep the repository-level `typespec/main.tsp` as the assembly entry
+point and shared definitions in common files directly under `typespec/`. Group operations in
+named TypeSpec interfaces rather than leaving operations at namespace scope. When a generated
+contract exposes an interface in the same namespace, extend it and redeclare operations where
+HTTP decorators or transport projections are required. Follow the project's existing layout when
+it uses another naming convention.
 
 ### 2. Map operations to source behavior
 
@@ -149,8 +169,15 @@ An Event Model project may have this generated domain contract:
 ```tsp
 namespace Accounts;
 
+@format("uuid") scalar Uuid extends string;
+
+model CreateAccount {
+  ownerId: Uuid;
+  name: string;
+}
+
 interface Commands {
-  op createAccount(ownerId: string, name: string): void;
+  op createAccount(payload: CreateAccount): void;
 }
 
 model Account {
@@ -164,9 +191,7 @@ The system binding imports that contract and defines the actual HTTP API:
 
 ```tsp
 namespace Accounts {
-  model CreateAccountRequest {
-    name: string;
-  }
+  model CreateAccountRequest is OmitProperties<CreateAccount, "ownerId">;
 
   /**
    * HTTP bindings extend the generated domain operation set, then redeclare operations where
